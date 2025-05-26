@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,19 +17,21 @@ class MovieFactory extends Factory
      */
     public function definition(): array
     {
-        $title = fake()->sentence(rand(3,6));
+        $title = fake()->sentence(rand(3, 6));
         $slug = Str::slug($title);
+
         return [
             'title' => $title,
             'slug' => $slug,
-            'synopsis' => fake()->paragraph(rand(5, 10)),
-            'category_id' => Category::inRandomOrder()->first(),
-            'year' => fake()->name() . ', ' . fake()->name(). ', ' . fake()->name(),
-            'actors' => fake()->name(). ', ' . fake()->name(). ', ' . fake()->name(),
-            'cover_image' => 'http//picsum.photos/seed/' . Str::random(10) . '/480/640',
+            'synopsis' => fake()->paragraphs(rand(5, 10), true),
+            'category_id' => \App\Models\Category::inRandomOrder()->first()?->id,
+            'year' => fake()->year(),
+            'actors' => fake()->name() . ', ' . fake()->name(),
+            'cover_image' => 'https://picsum.photos/seed/' . Str::random(10) . '/480/640',
+            // Tambahkan field lain yang NOT NULL di sini, misal:
+            // 'director' => fake()->name(),
             'created_at' => now(),
-            'update_at' => now()
-            //
+            'updated_at' => now(),
         ];
     }
 }
