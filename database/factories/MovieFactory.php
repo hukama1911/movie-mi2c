@@ -20,16 +20,19 @@ class MovieFactory extends Factory
         $title = fake()->sentence(rand(3, 6));
         $slug = Str::slug($title);
 
+        $category = \App\Models\Category::inRandomOrder()->first();
+        if (!$category) {
+            $category = \App\Models\Category::factory()->create();
+        }
+
         return [
             'title' => $title,
             'slug' => $slug,
-            'synopsis' => fake()->paragraphs(rand(5, 10), true),
-            'category_id' => \App\Models\Category::inRandomOrder()->first()?->id,
-            'year' => fake()->year(),
+            'synopsis' => fake()->paragraphs(rand(3, 6), true),
+            'category_id' => $category->id,
+            'year' => fake()->numberBetween(1980, date('Y')),
             'actors' => fake()->name() . ', ' . fake()->name(),
             'cover_image' => 'https://picsum.photos/seed/' . Str::random(10) . '/480/640',
-            // Tambahkan field lain yang NOT NULL di sini, misal:
-            // 'director' => fake()->name(),
             'created_at' => now(),
             'updated_at' => now(),
         ];

@@ -8,7 +8,7 @@
                     <h3 class="mb-0">Tambah Movie Baru</h3>
                 </div>
                 <div class="card-body p-4">
-                    <form action="{{ route('create_movie') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('store_movie') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="title" class="form-label">Judul</label>
